@@ -1,11 +1,15 @@
 absl-py==2.1.0
 astunparse==1.6.3
+bcrypt==4.2.1
 blinker==1.9.0
 certifi==2025.1.31
 charset-normalizer==3.4.1
 click==8.1.8
 colorama==0.4.6
+dnspython==2.7.0
 Flask==3.1.0
+Flask-Cors==5.0.0
+Flask-PyMongo==3.0.1
 flatbuffers==25.2.10
 gast==0.6.0
 google-pasta==0.2.0
@@ -28,6 +32,8 @@ optree==0.14.0
 packaging==24.2
 protobuf==5.29.3
 Pygments==2.19.1
+pymongo==4.11.1
+python-dotenv==1.0.1
 requests==2.32.3
 rich==13.9.4
 six==1.17.0
