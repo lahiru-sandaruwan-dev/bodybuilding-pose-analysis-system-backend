@@ -4,7 +4,7 @@ from app.controllers.pose_controller import analyze_pose
 # Initialize Blueprint
 pose_bp = Blueprint('pose', __name__)
 
-@pose_bp.route('/analyze_pose', methods=['POST'])
+@pose_bp.route('/analyze_pose/front_double_biceps', methods=['POST'])
 def analyze_pose_route():
     """
     API Endpoint: `/api/analyze_pose`
