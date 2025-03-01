@@ -16,3 +16,7 @@ load_dotenv()  # Load environment variables from .env
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'fallback_secret_key')
     MONGO_URI = os.getenv('MONGO_URI')
+    
+    # Add a print statement for debugging
+    print(f"MONGO_URI: {MONGO_URI}")
+

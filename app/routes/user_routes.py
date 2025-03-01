@@ -1,6 +1,8 @@
 # app/routes/user_routes.py
 from flask import Blueprint, request, jsonify
 from app.models.user_model import User
+from bson import ObjectId
+from bson.errors import InvalidId
 from app import mongo
 import bcrypt
 
@@ -49,7 +51,56 @@ def login():
 # Profile Route (GET)
 @user_routes.route('/profile', methods=['GET'])
 def profile():
-    # Fetch user details from the session or token (just a simple demo here)
-    user_data = {"username": "John Doe", "email": "john@example.com"}
+    try:
+        # Query the 'users' collection to get all users
+        users = mongo.db.users.find()  # You can adjust the query to fit your needs (e.g., filter by user ID)
+
+        # Convert the cursor result into a list of dictionaries
+        user_list = []
+        for user in users:
+            user_data = {
+                "_id": str(user.get("_id")),
+                "username": user.get("username"),
+                "email": user.get("email"),
+                "full_name": user.get("full_name"),  # Add more fields as needed
+            }
+            user_list.append(user_data)
+
+        # Return the list of users as a JSON response
+        return jsonify(user_list), 200
+
+    except Exception as e:
+        # Handle any errors (e.g., DB connection issues)
+        return jsonify({"error": str(e)}), 500
     
-    return jsonify(user_data), 200
+@user_routes.route('/profile/<user_id>', methods=['GET'])
+def get_user_by_id(user_id):
+    try:
+        # Try to convert the user_id to ObjectId
+        try:
+            user_object_id = ObjectId(user_id)
+        except InvalidId:
+            # If invalid ObjectId format, return a 400 error
+            return jsonify({"error": "Invalid user ID format"}), 400
+        
+        # Query the 'users' collection for the specific user
+        user = mongo.db.users.find_one({"_id": user_object_id})
+        
+        if user is None:
+            # If no user is found with the given _id, return a 404 error
+            return jsonify({"error": "User not found"}), 404
+        
+        # Prepare user data for response
+        user_data = {
+            "_id": str(user["_id"]),  # Convert ObjectId to string
+            "username": user.get("username"),
+            "email": user.get("email"),
+            "full_name": user.get("full_name"),  # Add more fields as needed
+        }
+        
+        # Return the user data as a JSON response
+        return jsonify(user_data), 200
+
+    except Exception as e:
+        # Handle any other unexpected errors
+        return jsonify({"error": str(e)}), 500  
