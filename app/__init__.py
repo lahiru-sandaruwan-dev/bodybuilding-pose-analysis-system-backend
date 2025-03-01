@@ -37,10 +37,12 @@ def create_app():
     # Import and register blueprints
     from app.routes.user_routes import user_routes
     from app.routes.pose_routes import pose_bp  # Import your pose blueprint
+    from app.routes.side_chest_pose_routes import side_chest_pose_bp  # Import your pose blueprint
 
     # Register Blueprints with appropriate URL prefixes
     app.register_blueprint(user_routes, url_prefix='/api')  # User-related routes
     app.register_blueprint(pose_bp, url_prefix='/api')      # Pose-related routes
+    app.register_blueprint(side_chest_pose_bp, url_prefix='/api')      # Pose-related routes
 
     return app
 
