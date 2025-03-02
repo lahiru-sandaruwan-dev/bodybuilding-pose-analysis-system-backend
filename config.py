@@ -18,5 +18,5 @@ class Config:
     MONGO_URI = os.getenv('MONGO_URI')
     
     # Add a print statement for debugging
-    print(f"MONGO_URI: {MONGO_URI}")
+    print(f"MONGO_URI A: {MONGO_URI}")
 
