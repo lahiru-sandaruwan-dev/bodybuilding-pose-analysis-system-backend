@@ -3,8 +3,10 @@ from flask import Blueprint, request, jsonify
 from app.models.user_model import User
 from bson import ObjectId, errors
 from app import mongo
+from flask_cors import CORS
 
 user_routes = Blueprint('user_routes', __name__)
+CORS(user_routes)  # Enable CORS for this Blueprint only
 
 def response(status, success, message, data=None):
     return jsonify({"status": status, "isSuccessful": success, "message": message, "data": data}), status
