@@ -171,6 +171,7 @@ def analyze_side_chest_pose(angles):
 
         # Prepare response data
         data = {
+            "pose_status": pose_status,
             "pose_correctness_score": round(float(pose_correctness_pred[0][0]), 2),
             "injury_risk_percentage": round(float(injury_risk_pred[0][0]) * 100, 1),
             "biceps_injury_risk": {
